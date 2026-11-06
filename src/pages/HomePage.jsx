@@ -9,7 +9,7 @@ import { getPopularMovies, searchMovies } from "../services/tmdb";
 
 import "../../styles/App.css";
 
-function HomePage() {
+function HomePage({ favorites, setFavorites }) {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -19,6 +19,16 @@ function HomePage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+  function toggleFavorite(id) {
+    if (favorites.includes(id)) {
+      setFavorites(favorites.filter((favoriteId) => favoriteId !== id));
+    } else {
+      setFavorites([...favorites, id]);
+    }
+  }
   function handleMovieClick(id) {
     navigate(`/movie/${id}`);
   }
@@ -79,6 +89,8 @@ function HomePage() {
             <div className="movies-grid">
               {filteredMovies.map((movie) => (
                 <MovieCard
+                  isFavorite={favorites.includes(movie.id)}
+                  onFavoriteClick={toggleFavorite}
                   key={movie.id}
                   id={movie.id}
                   title={movie.title}

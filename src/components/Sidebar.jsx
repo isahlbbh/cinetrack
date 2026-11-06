@@ -1,4 +1,5 @@
 import "../../styles/Sidebar.css";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   return (
@@ -14,9 +15,9 @@ function Sidebar() {
         <a href="#" className="sidebar-link active">
           ◈ <span>Explorar</span>
         </a>
-        <a href="#" className="sidebar-link">
+        <Link to="/favorites" className="sidebar-link">
           ♡ <span>Minha lista</span>
-        </a>
+        </Link>
         <a href="#" className="sidebar-link">
           ✓ <span>Assistidos</span>
         </a>
