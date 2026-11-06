@@ -1,10 +1,10 @@
 # 🎬 CineTrack
 
-**Explore filmes, descubra novas histórias e encontre o que assistir.**
+**Explore filmes, descubra novas histórias e organize seus favoritos.**
 
-O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes populares, pesquisar títulos e visualizar informações detalhadas utilizando dados reais da API do The Movie Database (TMDB).
+O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes populares, pesquisar títulos, visualizar informações detalhadas e criar uma lista personalizada de filmes favoritos utilizando dados reais da API do The Movie Database (TMDB).
 
-O projeto foi criado para colocar em prática conceitos de desenvolvimento Front-end, como componentização, gerenciamento de estados, consumo de APIs REST, navegação entre páginas e construção de interfaces responsivas.
+O projeto foi criado para colocar em prática conceitos de desenvolvimento Front-end, como componentização, gerenciamento e compartilhamento de estados, consumo de APIs REST, navegação entre páginas, persistência de dados e construção de interfaces responsivas.
 
 ## 📸 Preview do projeto
 
@@ -21,6 +21,7 @@ O projeto foi criado para colocar em prática conceitos de desenvolvimento Front
 - **CSS3** — estilização, Flexbox, CSS Grid e responsividade.
 - **Vite** — ambiente de desenvolvimento e build.
 - **TMDB API** — integração com dados reais de filmes.
+- **LocalStorage** — persistência dos filmes favoritos no navegador.
 
 ## ✨ Funcionalidades implementadas
 
@@ -33,9 +34,15 @@ O projeto foi criado para colocar em prática conceitos de desenvolvimento Front
 - 🔗 Navegação dinâmica utilizando React Router.
 - 📖 Exibição de sinopse, gêneros, duração e avaliação.
 - ↩️ Botão para retornar à página inicial.
-- ⏳ Indicadores de carregamento durante as requisições.
+- ❤️ Adição e remoção de filmes da lista de favoritos na página Explorar.
+- 💾 Persistência dos favoritos utilizando LocalStorage.
+- 📚 Página **Minha lista** com os filmes favoritados.
+- 🎞️ Consulta dos dados completos dos favoritos através da API do TMDB.
+- 🖱️ Navegação para os detalhes dos filmes diretamente da lista de favoritos.
+- 🔄 Compartilhamento do estado de favoritos entre páginas.
+- ⏳ Indicadores de carregamento na listagem principal.
 - 🚫 Mensagens para pesquisas sem resultados.
-- ⚠️ Tratamento básico de erros nas requisições.
+- ⚠️ Tratamento básico de erros nas requisições da listagem principal.
 - 🎨 Interface em tema escuro com detalhes em roxo.
 - 📱 Layout responsivo na página de detalhes.
 - 🧩 Organização em componentes, páginas e serviços.
@@ -44,15 +51,19 @@ O projeto foi criado para colocar em prática conceitos de desenvolvimento Front
 
 O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 
+- [x] Implementar uma lista de filmes favoritos.
+- [x] Salvar favoritos utilizando LocalStorage.
+- [x] Criar uma página dedicada aos filmes favoritos.
+- [ ] Permitir remover favoritos diretamente da página Minha lista.
+- [ ] Exibir uma mensagem personalizada quando não houver favoritos.
 - [ ] Melhorar a experiência de busca com debounce.
 - [ ] Evitar respostas desatualizadas em pesquisas consecutivas.
 - [ ] Exibir elenco e informações adicionais dos filmes.
-- [ ] Implementar uma lista de filmes favoritos.
-- [ ] Salvar favoritos utilizando LocalStorage.
 - [ ] Criar uma lista de filmes para assistir posteriormente.
 - [ ] Adicionar filtros por gênero e avaliação.
 - [ ] Aprimorar a responsividade das demais telas.
 - [ ] Adicionar estados visuais de carregamento (skeletons).
+- [ ] Aprimorar o tratamento de erros e carregamento da página de favoritos.
 - [ ] Aprimorar a acessibilidade da interface.
 
 ## 📚 Conceitos praticados
@@ -64,12 +75,19 @@ Durante o desenvolvimento, foram trabalhados:
 - Navegação com `useNavigate`.
 - Parâmetros dinâmicos com `useParams`.
 - Configuração de rotas com `BrowserRouter`, `Routes` e `Route`.
+- Navegação declarativa utilizando `Link`.
+- Gerenciamento e compartilhamento de estados entre componentes.
+- **Lifting State Up** — elevação do estado para um componente pai.
 - Renderização condicional.
 - Renderização de listas com `.map()`.
-- Manipulação de arrays e spread operator.
+- Manipulação de arrays com `.filter()`, `.includes()` e spread operator.
 - Requisições HTTP com `fetch()`.
 - Programação assíncrona com `async/await`.
+- Execução de múltiplas requisições com `Promise.all()`.
 - Tratamento de erros com `try/catch`.
+- Persistência de dados com `localStorage`.
+- Serialização e desserialização com `JSON.stringify()` e `JSON.parse()`.
+- Eventos e controle de propagação com `event.stopPropagation()`.
 - Paginação de resultados.
 - Variáveis de ambiente com Vite.
 - Separação de responsabilidades entre componentes, páginas e serviços.
@@ -83,10 +101,10 @@ cinetrack/
 │   ├── components/
 │   │   ├── Header.jsx
 │   │   ├── Sidebar.jsx
-│   │   ├── MovieCard.jsx
-│   │   └── MovieDetails.jsx
+│   │   └── MovieCard.jsx
 │   ├── pages/
 │   │   ├── HomePage.jsx
+│   │   ├── FavoritesPage.jsx
 │   │   └── MovieDetailsPage.jsx
 │   ├── services/
 │   │   └── tmdb.js
@@ -145,9 +163,11 @@ Abra no navegador o endereço local informado pelo Vite.
 
 O CineTrack faz parte do meu processo de aprendizado e evolução como desenvolvedora Front-end.
 
-Meu objetivo é desenvolver uma aplicação que vá além de uma interface estática, trabalhando com dados reais, interações, navegação, organização de código e resolução de problemas encontrados durante o desenvolvimento.
+Meu objetivo é desenvolver uma aplicação que vá além de uma interface estática, trabalhando com dados reais, interações, navegação, persistência de informações, organização de código e resolução de problemas encontrados durante o desenvolvimento.
 
-Cada funcionalidade representa uma oportunidade de aprofundar meus conhecimentos em React, JavaScript e boas práticas de desenvolvimento web.
+A implementação do sistema de favoritos permitiu aprofundar conhecimentos em gerenciamento de estados, compartilhamento de dados entre componentes, armazenamento local e requisições assíncronas.
+
+Cada funcionalidade representa uma oportunidade de desenvolver autonomia e consolidar meus conhecimentos em React, JavaScript e boas práticas de desenvolvimento web.
 
 O projeto continuará recebendo melhorias conforme novos conhecimentos forem adquiridos.
 
