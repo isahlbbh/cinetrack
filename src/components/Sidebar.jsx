@@ -12,9 +12,9 @@ function Sidebar() {
       <p className="sidebar-label">MENU</p>
 
       <nav className="sidebar-nav">
-        <a href="#" className="sidebar-link active">
+        <Link to="/" className="sidebar-link active">
           ◈ <span>Explorar</span>
-        </a>
+        </Link>
         <Link to="/favorites" className="sidebar-link">
           ♡ <span>Minha lista</span>
         </Link>

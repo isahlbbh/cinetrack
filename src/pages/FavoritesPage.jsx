@@ -4,17 +4,26 @@ import MovieCard from "../components/MovieCard";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 
-export default function FavoritesPage({ favorites }) {
+export default function FavoritesPage({ favorites, toggleFavorite }) {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadFavorites() {
-      const requests = favorites.map((id) => getMovieDetails(id));
+      setLoading(true);
 
-      const results = await Promise.all(requests);
+      try {
+        const requests = favorites.map((id) => getMovieDetails(id));
 
-      setMovies(results);
+        const results = await Promise.all(requests);
+
+        setMovies(results);
+      } catch (error) {
+        console.error("Erro ao carregar favoritos:", error);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadFavorites();
@@ -25,8 +34,13 @@ export default function FavoritesPage({ favorites }) {
 
       <div className="main-content">
         <main className="page-content">
-          <h1>Meus favoritos ❤️</h1>
-
+          <h1>Meus favoritos</h1>
+          {loading && <p>Carregando favoritos...</p>}
+          {!loading && movies.length === 0 && (
+            <p className="empty-message">
+              Você ainda não tem filmes favoritos.
+            </p>
+          )}
           <div className="movies-grid">
             {movies.map((movie) => (
               <MovieCard
@@ -38,6 +52,7 @@ export default function FavoritesPage({ favorites }) {
                 rating={movie.vote_average.toFixed(1)}
                 poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 isFavorite={true}
+                onFavoriteClick={toggleFavorite}
               />
             ))}
           </div>
