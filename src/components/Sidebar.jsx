@@ -24,9 +24,12 @@ function Sidebar() {
         >
           ♡ <span>Minha lista</span>
         </Link>
-        <a href="#" className="sidebar-link">
+        <Link
+          to="/watched"
+          className={`sidebar-link ${location.pathname === "/watched" ? "active" : ""}`}
+        >
           ✓ <span>Assistidos</span>
-        </a>
+        </Link>
       </nav>
 
       <div className="sidebar-footer">

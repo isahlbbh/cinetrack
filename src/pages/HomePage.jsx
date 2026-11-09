@@ -9,7 +9,7 @@ import { getPopularMovies, searchMovies } from "../services/tmdb";
 
 import "../../styles/App.css";
 
-function HomePage({ favorites, toggleFavorite }) {
+function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -81,6 +81,8 @@ function HomePage({ favorites, toggleFavorite }) {
                 <MovieCard
                   isFavorite={favorites.includes(movie.id)}
                   onFavoriteClick={toggleFavorite}
+                  isWatched={watched.includes(movie.id)}
+                  onWatchedClick={toggleWatched}
                   key={movie.id}
                   id={movie.id}
                   title={movie.title}

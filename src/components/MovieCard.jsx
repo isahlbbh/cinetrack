@@ -9,6 +9,8 @@ function MovieCard({
   onClick,
   isFavorite,
   onFavoriteClick,
+  isWatched,
+  onWatchedClick,
 }) {
   return (
     <article className="movie-card" onClick={onClick}>
@@ -22,6 +24,15 @@ function MovieCard({
         }}
       >
         {isFavorite ? "❤️" : "🤍"}
+      </button>
+      <button
+        className="watched-btn"
+        onClick={(event) => {
+          event.stopPropagation();
+          onWatchedClick(id);
+        }}
+      >
+        {isWatched ? "✅ Assistido" : "✓ Marcar como assistido"}
       </button>
       <div className="movie-info">
         <h3>{title}</h3>

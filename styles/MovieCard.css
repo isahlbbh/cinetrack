@@ -65,3 +65,19 @@
 .favorite-btn:hover {
   transform: scale(1.15);
 }
+.watched-btn {
+  background-color: #27213d;
+  color: #c4b5fd;
+  border: 1px solid #7c3aed;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.watched-btn:hover {
+  background-color: #7c3aed;
+  color: white;
+}
