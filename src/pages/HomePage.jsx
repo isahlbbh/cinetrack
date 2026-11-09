@@ -61,7 +61,10 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
 
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Sidebar
+        favoritesCount={favorites.length}
+        watchedCount={watched.length}
+      />
 
       <div className="main-content">
         <Header search={search} setSearch={setSearch} />

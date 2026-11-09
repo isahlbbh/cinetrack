@@ -55,13 +55,18 @@ function App() {
           <FavoritesPage
             favorites={favorites}
             toggleFavorite={toggleFavorite}
+            watched={watched}
           />
         }
       />
       <Route
         path="/watched"
         element={
-          <WatchedPage watched={watched} toggleWatched={toggleWatched} />
+          <WatchedPage
+            watched={watched}
+            toggleWatched={toggleWatched}
+            favorites={favorites}
+          />
         }
       />{" "}
     </Routes>

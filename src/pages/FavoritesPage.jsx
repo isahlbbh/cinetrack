@@ -4,7 +4,7 @@ import MovieCard from "../components/MovieCard";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 
-export default function FavoritesPage({ favorites, toggleFavorite }) {
+export default function FavoritesPage({ favorites, toggleFavorite, watched }) {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,10 @@ export default function FavoritesPage({ favorites, toggleFavorite }) {
   }, [favorites]);
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Sidebar
+        favoritesCount={favorites.length}
+        watchedCount={watched.length}
+      />
 
       <div className="main-content">
         <main className="page-content">

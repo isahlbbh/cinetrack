@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getMovieDetails } from "../services/tmdb";
 import { useNavigate } from "react-router-dom";
 
-export default function WatchedPage({ watched, toggleWatched }) {
+export default function WatchedPage({ watched, toggleWatched, favorites }) {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,8 +30,10 @@ export default function WatchedPage({ watched, toggleWatched }) {
 
   return (
     <div className="app-layout">
-      <Sidebar />
-
+      <Sidebar
+        favoritesCount={favorites.length}
+        watchedCount={watched.length}
+      />
       <div className="main-content">
         <main className="page-content">
           <h1>Filmes assistidos ✅</h1>
