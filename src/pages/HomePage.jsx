@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useSearchParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
@@ -18,6 +18,17 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const genre = searchParams.get("genre") || "all";
+
+  const genres = [
+    { id: "all", name: "Todos" },
+    { id: 27, name: "Terror" },
+    { id: 35, name: "Comédia" },
+    { id: 10749, name: "Romance" },
+    { id: 878, name: "Ficção científica" },
+    { id: 18, name: "Drama" },
+  ];
 
   function handleMovieClick(id) {
     navigate(`/movie/${id}`);
@@ -55,10 +66,16 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
     loadMovies();
   }, [page, search]);
 
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredMovies = movies.filter((movie) => {
+    const matchesSearch = movie.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
+    const matchesGenre =
+      genre === "all" || movie.genre_ids.includes(Number(genre));
+
+    return matchesSearch && matchesGenre;
+  });
   return (
     <div className="app-layout">
       <Sidebar
@@ -72,6 +89,17 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
         <main className="page-content">
           <h1>Explorar filmes</h1>
 
+          <select
+            className="genre-select"
+            value={genre}
+            onChange={(event) => setSearchParams({ genre: event.target.value })}
+          >
+            {genres.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
           {loading && movies.length === 0 ? (
             <p className="empty-message">Carregando filmes...</p>
           ) : error ? (

@@ -30,7 +30,7 @@ function MovieDetailsPage() {
 
   return (
     <main className="movie-page">
-      <button className="back-btn" onClick={() => navigate("/")}>
+      <button className="back-btn" onClick={() => navigate(-1)}>
         ← Voltar
       </button>
 
