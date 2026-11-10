@@ -5,7 +5,11 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
 
-import { getPopularMovies, searchMovies } from "../services/tmdb";
+import {
+  getPopularMovies,
+  searchMovies,
+  getMoviesByGenre,
+} from "../services/tmdb";
 
 import "../../styles/App.css";
 
@@ -35,14 +39,25 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
   }
 
   useEffect(() => {
+    let ignore = false;
     async function loadMovies() {
       setLoading(true);
       setError("");
+      if (page === 1) {
+        setMovies([]);
+      }
+      if (page === 1) {
+        setHasMore(true);
+      }
 
       try {
         const data = search.trim()
           ? await searchMovies(search)
-          : await getPopularMovies(page);
+          : genre !== "all"
+            ? await getMoviesByGenre(Number(genre), page)
+            : await getPopularMovies(page);
+
+        if (ignore) return;
 
         if (search.trim()) {
           setMovies(data);
@@ -51,20 +66,27 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
         } else {
           setMovies((prevMovies) => [...prevMovies, ...data.results]);
         }
-
-        if (!search.trim() && (page >= 5 || page >= data.totalPages)) {
-          setHasMore(false);
+        if (!search.trim()) {
+          setHasMore(page < 5 && page < data.totalPages);
         }
       } catch (error) {
-        console.error("Erro ao carregar filmes:", error);
-        setError("Não foi possível carregar os filmes.");
+        if (!ignore) {
+          console.error("Erro ao carregar filmes:", error);
+          setError("Não foi possível carregar os filmes.");
+        }
       } finally {
-        setLoading(false);
+        if (!ignore) {
+          setLoading(false);
+        }
       }
     }
 
     loadMovies();
-  }, [page, search]);
+
+    return () => {
+      ignore = true;
+    };
+  }, [page, search, genre]);
 
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.title
@@ -92,7 +114,10 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
           <select
             className="genre-select"
             value={genre}
-            onChange={(event) => setSearchParams({ genre: event.target.value })}
+            onChange={(event) => {
+              setPage(1);
+              setSearchParams({ genre: event.target.value });
+            }}
           >
             {genres.map((item) => (
               <option key={item.id} value={item.id}>

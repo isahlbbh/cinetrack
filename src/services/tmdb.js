@@ -44,3 +44,20 @@ if (!response.ok) {
 const data = await response.json();
 return data;
 }
+
+
+export async function getMoviesByGenre(genreId, page = 1) {
+  const response = await fetch(
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=pt-BR&with_genres=${genreId}&page=${page}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Erro ao buscar filmes por gênero.");
+  }
+
+  const data = await response.json();
+  return {
+    results: data.results,
+    totalPages: data.total_pages,
+  }
+}
