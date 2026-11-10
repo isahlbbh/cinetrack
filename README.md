@@ -2,9 +2,9 @@
 
 **Explore filmes, descubra novas histórias e organize seus favoritos e assistidos.**
 
-O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes populares, pesquisar títulos, visualizar informações detalhadas, criar uma lista personalizada de favoritos e acompanhar os filmes já assistidos, utilizando dados reais da API do The Movie Database (TMDB).
+O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes populares, pesquisar títulos, filtrar filmes por gênero, visualizar informações detalhadas, criar uma lista personalizada de favoritos e acompanhar os filmes já assistidos, utilizando dados reais da API do The Movie Database (TMDB).
 
-O projeto foi criado para colocar em prática conceitos de desenvolvimento Front-end, como componentização, gerenciamento e compartilhamento de estados, consumo de APIs REST, navegação entre páginas, persistência de dados e construção de interfaces responsivas.
+O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento Front-end, como componentização, gerenciamento e compartilhamento de estados, consumo de APIs REST, navegação entre páginas, persistência de dados, filtros dinâmicos, programação assíncrona e construção de interfaces responsivas.
 
 ## 📸 Preview do projeto
 
@@ -16,7 +16,7 @@ O projeto foi criado para colocar em prática conceitos de desenvolvimento Front
 
 - **React** — construção de interfaces com componentes reutilizáveis.
 - **JavaScript (ES6+)** — lógica da aplicação e programação assíncrona.
-- **React Router DOM** — navegação entre páginas e rotas dinâmicas.
+- **React Router DOM** — navegação entre páginas, rotas dinâmicas e parâmetros de URL.
 - **HTML5** — estrutura semântica da aplicação.
 - **CSS3** — estilização, Flexbox, CSS Grid e responsividade.
 - **Vite** — ambiente de desenvolvimento e build.
@@ -31,16 +31,30 @@ O projeto foi criado para colocar em prática conceitos de desenvolvimento Front
 - Pesquisa de filmes por título.
 - Exibição de pôsteres, títulos, anos de lançamento e avaliações.
 - Paginação com botão **Carregar mais filmes**.
-- Carregamento incremental de filmes populares.
+- Carregamento incremental de filmes.
 - Mensagens para pesquisas sem resultados.
 - Indicadores de carregamento e tratamento básico de erros.
+
+### 🎭 Filtros por gênero
+
+- Seleção de filmes por gênero através de um menu interativo.
+- Gêneros disponíveis: Terror, Comédia, Romance, Ficção científica e Drama.
+- Opção para visualizar filmes de todos os gêneros.
+- Busca de filmes diretamente na API TMDB utilizando o endpoint `/discover/movie`.
+- Integração do filtro com a paginação.
+- Reinicialização da paginação ao selecionar outro gênero.
+- Persistência do gênero selecionado nos parâmetros da URL utilizando `useSearchParams()`.
+- Preservação do filtro ao navegar para os detalhes de um filme e retornar pelo histórico.
+- Atualização automática da listagem ao alterar o gênero.
+- Tratamento de requisições assíncronas para evitar que respostas antigas substituam os resultados atuais.
+- Reinicialização dos resultados e controle do estado de carregamento ao iniciar novas buscas.
 
 ### 🎬 Detalhes dos filmes
 
 - Página individual de detalhes para cada filme.
 - Navegação dinâmica utilizando React Router.
 - Exibição de sinopse, gêneros, duração e avaliação.
-- Botão para retornar à página inicial.
+- Botão para retornar à página anterior utilizando `useNavigate()`.
 
 ### ❤️ Sistema de favoritos
 
@@ -74,12 +88,15 @@ O projeto foi criado para colocar em prática conceitos de desenvolvimento Front
 - Contadores dinâmicos de filmes favoritos e assistidos.
 - Atualização automática dos contadores ao adicionar ou remover filmes.
 - Interface em tema escuro com detalhes em roxo.
+- Seletor de gêneros estilizado com efeitos de hover, focus e transições.
 - Layout responsivo na página de detalhes.
 - Organização em componentes, páginas e serviços.
 
 ## 🛠️ Próximas funcionalidades
 
 O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
+
+### Funcionalidades concluídas
 
 - [x] Implementar uma lista de filmes favoritos.
 - [x] Salvar favoritos utilizando LocalStorage.
@@ -92,9 +109,17 @@ O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 - [x] Criar uma página dedicada aos filmes assistidos.
 - [x] Implementar navegação com destaque da página ativa.
 - [x] Adicionar contadores dinâmicos na Sidebar.
-- [ ] Adicionar filtros por gênero e avaliação.
+- [x] Implementar filtro de filmes por gênero.
+- [x] Integrar a busca por gênero diretamente à API TMDB.
+- [x] Integrar a paginação aos filtros por gênero.
+- [x] Preservar o gênero selecionado nos parâmetros da URL.
+- [x] Evitar que respostas antigas substituam resultados de buscas recentes.
+
+### Melhorias planejadas
+
+- [ ] Adicionar filtro por avaliação dos filmes.
 - [ ] Melhorar a experiência de busca com debounce.
-- [ ] Evitar respostas desatualizadas em pesquisas consecutivas.
+- [ ] Aprimorar a combinação entre pesquisa por título e filtros por gênero.
 - [ ] Exibir elenco e informações adicionais dos filmes.
 - [ ] Criar uma lista de filmes para assistir posteriormente.
 - [ ] Aprimorar a responsividade das demais telas.
@@ -106,33 +131,72 @@ O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 
 Durante o desenvolvimento, foram trabalhados:
 
+### React e componentização
+
 - Componentes funcionais e props.
 - Hooks `useState` e `useEffect`.
-- Navegação com `useNavigate`.
-- Identificação da rota atual com `useLocation`.
-- Parâmetros dinâmicos com `useParams`.
-- Configuração de rotas com `BrowserRouter`, `Routes` e `Route`.
-- Navegação declarativa utilizando `Link`.
 - Gerenciamento e compartilhamento de estados entre componentes.
 - **Lifting State Up** — elevação do estado para um componente pai.
 - Fluxo de dados entre componentes pais e filhos.
 - Passagem de funções como props.
 - Renderização condicional.
 - Renderização de listas com `.map()`.
-- Manipulação de arrays com `.filter()`, `.includes()` e spread operator.
+- Atualização automática da interface a partir de mudanças de estado.
+
+### React Router
+
+- Navegação com `useNavigate()`.
+- Identificação da rota atual com `useLocation()`.
+- Parâmetros dinâmicos com `useParams()`.
+- Gerenciamento de parâmetros de URL com `useSearchParams()`.
+- Configuração de rotas com `BrowserRouter`, `Routes` e `Route`.
+- Navegação declarativa utilizando `Link`.
+- Preservação de filtros através de parâmetros de URL.
+- Navegação pelo histórico com `navigate(-1)`.
+
+### JavaScript
+
+- Manipulação de arrays com `.map()`, `.filter()`, `.includes()` e spread operator.
+- Manipulação de objetos e acesso às suas propriedades.
+- Operadores lógicos `&&`, `||` e `!`.
+- Operadores ternários e condições encadeadas.
+- Conversão de strings para números com `Number()`.
+- Parâmetros com valores padrão em funções.
+- Template literals para construção dinâmica de URLs.
+- Eventos e controle de propagação com `event.stopPropagation()`.
+
+### APIs e programação assíncrona
+
 - Requisições HTTP com `fetch()`.
 - Programação assíncrona com `async/await`.
-- Execução de múltiplas requisições com `Promise.all()`.
+- Consumo de endpoints REST.
+- Leitura de respostas JSON com `response.json()`.
+- Verificação de respostas HTTP com `response.ok`.
 - Tratamento de erros com `try/catch/finally`.
+- Execução de múltiplas requisições com `Promise.all()`.
+- Paginação de resultados.
+- Filtragem de dados diretamente na API utilizando parâmetros de consulta.
+- Gerenciamento de dependências do `useEffect`.
+- Funções de limpeza (_cleanup_) do `useEffect`.
+- Controle de respostas assíncronas desatualizadas.
+- Gerenciamento de estados de carregamento e erro.
+
+### Persistência e organização
+
 - Persistência de dados com `localStorage`.
 - Serialização e desserialização com `JSON.stringify()` e `JSON.parse()`.
-- Eventos e controle de propagação com `event.stopPropagation()`.
-- Classes CSS dinâmicas utilizando operadores ternários.
-- Atualização automática da interface a partir de mudanças de estado.
-- Paginação de resultados.
 - Variáveis de ambiente com Vite.
 - Separação de responsabilidades entre componentes, páginas e serviços.
-- Layouts responsivos com Flexbox e media queries.
+- Organização de funções reutilizáveis para consumo da API.
+
+### CSS e interface
+
+- Layouts com Flexbox e CSS Grid.
+- Media queries e responsividade.
+- Pseudoclasses `:hover` e `:focus`.
+- Transições com `transition`.
+- Classes CSS dinâmicas.
+- Estilização de formulários e seletores.
 
 ## 📁 Estrutura do projeto
 
@@ -205,13 +269,17 @@ Abra no navegador o endereço local informado pelo Vite.
 
 O CineTrack faz parte do meu processo de aprendizado e evolução como desenvolvedora Front-end.
 
-Meu objetivo é desenvolver uma aplicação que vá além de uma interface estática, trabalhando com dados reais, interações, navegação, persistência de informações, organização de código e resolução de problemas encontrados durante o desenvolvimento.
+Meu objetivo é desenvolver uma aplicação que vá além de uma interface estática, trabalhando com dados reais, interações, navegação, persistência de informações, filtros dinâmicos, organização de código e resolução de problemas encontrados durante o desenvolvimento.
 
 A implementação dos sistemas de favoritos e filmes assistidos permitiu aprofundar meus conhecimentos em gerenciamento de estados, compartilhamento de dados entre componentes, armazenamento local, manipulação de arrays e requisições assíncronas.
 
-O desenvolvimento dos contadores dinâmicos e da navegação com destaque automático também contribuiu para compreender melhor o fluxo de dados no React e a atualização da interface a partir das mudanças de estado.
+O desenvolvimento dos filtros por gênero representou uma nova etapa do projeto, envolvendo a integração com endpoints específicos da API TMDB, gerenciamento de parâmetros de URL, paginação dinâmica e controle de requisições assíncronas.
 
-Cada funcionalidade representa uma oportunidade de desenvolver autonomia e consolidar meus conhecimentos em React, JavaScript e boas práticas de desenvolvimento web.
+Durante essa implementação, também pratiquei o uso de funções de limpeza do `useEffect`, compreendendo como evitar que respostas de requisições antigas interfiram nos resultados atuais.
+
+O desenvolvimento dos contadores dinâmicos e da navegação com destaque automático contribuiu para compreender melhor o fluxo de dados no React e a atualização da interface a partir das mudanças de estado.
+
+Cada funcionalidade representa uma oportunidade de desenvolver autonomia, aprimorar meu raciocínio lógico e consolidar meus conhecimentos em React, JavaScript e boas práticas de desenvolvimento web.
 
 O projeto continuará recebendo melhorias conforme novos conhecimentos forem adquiridos.
 
