@@ -17,6 +17,7 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -44,6 +45,13 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
   function handleMovieClick(id) {
     navigate(`/movie/${id}`);
   }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
 
   useEffect(() => {
     let ignore = false;
@@ -58,8 +66,8 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
       }
 
       try {
-        const data = search.trim()
-          ? await searchMovies(search)
+        const data = debouncedSearch.trim()
+          ? await searchMovies(debouncedSearch)
           : await getMoviesByGenre(
               genre === "all" ? "" : Number(genre),
               page,
@@ -68,14 +76,14 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
 
         if (ignore) return;
 
-        if (search.trim()) {
+        if (debouncedSearch.trim()) {
           setMovies(data);
         } else if (page === 1) {
           setMovies(data.results);
         } else {
           setMovies((prevMovies) => [...prevMovies, ...data.results]);
         }
-        if (!search.trim()) {
+        if (!debouncedSearch.trim()) {
           setHasMore(page < 5 && page < data.totalPages);
         }
       } catch (error) {
@@ -95,15 +103,16 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
     return () => {
       ignore = true;
     };
-  }, [page, search, genre, rating]);
-
+  }, [page, debouncedSearch, genre, rating]);
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.title
       .toLowerCase()
-      .includes(search.toLowerCase());
+      .includes(debouncedSearch.toLowerCase());
 
     const matchesGenre =
-      genre === "all" || movie.genre_ids.includes(Number(genre));
+      debouncedSearch.trim() ||
+      genre === "all" ||
+      movie.genre_ids.includes(Number(genre));
 
     return matchesSearch && matchesGenre;
   });
