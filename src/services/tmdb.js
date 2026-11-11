@@ -46,9 +46,8 @@ return data;
 }
 
 
-export async function getMoviesByGenre(genreId, page = 1) {
-  const response = await fetch(
-    `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=pt-BR&with_genres=${genreId}&page=${page}`
+export async function getMoviesByGenre(genreId, page = 1, rating = "all") {  const response = await fetch(
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=pt-BR&with_genres=${genreId}&page=${page}&vote_average.gte=${rating === "all" ? 0 : rating}`
   );
 
   if (!response.ok) {

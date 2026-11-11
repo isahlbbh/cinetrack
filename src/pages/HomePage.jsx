@@ -24,6 +24,7 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
   const [hasMore, setHasMore] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const genre = searchParams.get("genre") || "all";
+  const rating = searchParams.get("rating") || "all";
 
   const genres = [
     { id: "all", name: "Todos" },
@@ -32,6 +33,12 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
     { id: 10749, name: "Romance" },
     { id: 878, name: "Ficção científica" },
     { id: 18, name: "Drama" },
+  ];
+  const ratings = [
+    { id: "all", name: "Todas as avaliações" },
+    { id: 6, name: "⭐ 6.0 ou superior" },
+    { id: 7, name: "⭐ 7.0 ou superior" },
+    { id: 8, name: "⭐ 8.0 ou superior" },
   ];
 
   function handleMovieClick(id) {
@@ -53,9 +60,11 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
       try {
         const data = search.trim()
           ? await searchMovies(search)
-          : genre !== "all"
-            ? await getMoviesByGenre(Number(genre), page)
-            : await getPopularMovies(page);
+          : await getMoviesByGenre(
+              genre === "all" ? "" : Number(genre),
+              page,
+              rating,
+            );
 
         if (ignore) return;
 
@@ -86,7 +95,7 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
     return () => {
       ignore = true;
     };
-  }, [page, search, genre]);
+  }, [page, search, genre, rating]);
 
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.title
@@ -116,7 +125,11 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
             value={genre}
             onChange={(event) => {
               setPage(1);
-              setSearchParams({ genre: event.target.value });
+              setSearchParams((prev) => {
+                const params = new URLSearchParams(prev);
+                params.set("genre", event.target.value);
+                return params;
+              });
             }}
           >
             {genres.map((item) => (
@@ -125,6 +138,26 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
               </option>
             ))}
           </select>
+
+          <select
+            className="genre-select"
+            value={rating}
+            onChange={(event) => {
+              setPage(1);
+              setSearchParams((prev) => {
+                const params = new URLSearchParams(prev);
+                params.set("rating", event.target.value);
+                return params;
+              });
+            }}
+          >
+            {ratings.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+
           {loading && movies.length === 0 ? (
             <p className="empty-message">Carregando filmes...</p>
           ) : error ? (
