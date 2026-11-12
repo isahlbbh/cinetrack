@@ -13,7 +13,14 @@ import {
 
 import "../../styles/App.css";
 
-function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
+function HomePage({
+  favorites,
+  toggleFavorite,
+  watched,
+  toggleWatched,
+  watchList,
+  toggleWatchList,
+}) {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -192,6 +199,8 @@ function HomePage({ favorites, toggleFavorite, watched, toggleWatched }) {
                       : "https://placehold.co/300x450/211b30/c4a4ff?text=Sem+poster"
                   }
                   onClick={() => handleMovieClick(movie.id)}
+                  watchList={watchList}
+                  toggleWatchList={toggleWatchList}
                 />
               ))}
             </div>

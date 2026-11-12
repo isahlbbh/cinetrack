@@ -11,7 +11,10 @@ function MovieCard({
   onFavoriteClick,
   isWatched,
   onWatchedClick,
+  watchList,
+  toggleWatchList,
 }) {
+  const isInWatchList = watchList?.includes(id) ?? false;
   return (
     <article className="movie-card" onClick={onClick}>
       <img src={poster} alt={`Pôster de ${title}`} className="movie-poster" />
@@ -33,6 +36,15 @@ function MovieCard({
         }}
       >
         {isWatched ? "✅ Assistido" : "✓ Marcar como assistido"}
+      </button>
+      <button
+        className="watchlist-btn"
+        onClick={(event) => {
+          event.stopPropagation();
+          toggleWatchList(id);
+        }}
+      >
+        {isInWatchList ? "🍿 Na lista" : "➕ Quero assistir"}
       </button>
       <div className="movie-info">
         <h3>{title}</h3>

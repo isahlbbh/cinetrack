@@ -14,13 +14,19 @@ function App() {
     const savedWatched = localStorage.getItem("watched");
     return savedWatched ? JSON.parse(savedWatched) : [];
   });
-
+  const [watchList, setWatchList] = useState(() => {
+    const savedWatchList = localStorage.getItem("watchList");
+    return savedWatchList ? JSON.parse(savedWatchList) : [];
+  });
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
   useEffect(() => {
     localStorage.setItem("watched", JSON.stringify(watched));
   }, [watched]);
+  useEffect(() => {
+    localStorage.setItem("watchList", JSON.stringify(watchList));
+  }, [watchList]);
   function toggleFavorite(id) {
     if (favorites.includes(id)) {
       setFavorites(favorites.filter((favoriteId) => favoriteId !== id));
@@ -35,6 +41,13 @@ function App() {
       setWatched([...watched, id]);
     }
   }
+  function toggleWatchList(id) {
+    if (watchList.includes(id)) {
+      setWatchList(watchList.filter((movieId) => movieId !== id));
+    } else {
+      setWatchList([...watchList, id]);
+    }
+  }
   return (
     <Routes>
       <Route
@@ -45,6 +58,8 @@ function App() {
             toggleFavorite={toggleFavorite}
             watched={watched}
             toggleWatched={toggleWatched}
+            watchList={watchList}
+            toggleWatchList={toggleWatchList}
           />
         }
       />
@@ -56,9 +71,12 @@ function App() {
             favorites={favorites}
             toggleFavorite={toggleFavorite}
             watched={watched}
+            watchList={watchList}
+            toggleWatchList={toggleWatchList}
           />
         }
       />
+
       <Route
         path="/watched"
         element={
@@ -66,9 +84,11 @@ function App() {
             watched={watched}
             toggleWatched={toggleWatched}
             favorites={favorites}
+            watchList={watchList}
+            toggleWatchList={toggleWatchList}
           />
         }
-      />{" "}
+      />
     </Routes>
   );
 }
