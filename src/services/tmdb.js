@@ -60,3 +60,14 @@ export async function getMoviesByGenre(genreId, page = 1, rating = "all") {  con
     totalPages: data.total_pages,
   }
 }
+export async function getMovieCredits(id) {
+  const response = await fetch(
+    `${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=pt-BR`
+  );
+  if (!response.ok) {
+  throw new Error("Erro ao buscar elenco do filme.");
+}
+const data = await response.json();
+
+return data.cast.slice(0, 6);
+}

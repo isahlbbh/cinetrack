@@ -34,6 +34,7 @@ O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento
 - Carregamento incremental de filmes.
 - Mensagens para pesquisas sem resultados.
 - Indicadores de carregamento e tratamento básico de erros.
+- Pesquisa otimizada com debounce de 500 ms, reduzindo requisições desnecessárias à API.
 
 ### 🎭 Filtros por gênero
 
@@ -55,6 +56,10 @@ O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento
 - Navegação dinâmica utilizando React Router.
 - Exibição de sinopse, gêneros, duração e avaliação.
 - Botão para retornar à página anterior utilizando `useNavigate()`.
+- Exibição dos 6 primeiros integrantes do elenco principal.
+- Fotos dos atores, nomes e personagens interpretados.
+- Integração com o endpoint `/movie/{id}/credits` da TMDB.
+- Layout do elenco organizado com CSS Grid.
 
 ### ❤️ Sistema de favoritos
 
@@ -114,13 +119,12 @@ O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 - [x] Integrar a paginação aos filtros por gênero.
 - [x] Preservar o gênero selecionado nos parâmetros da URL.
 - [x] Evitar que respostas antigas substituam resultados de buscas recentes.
+- [x] Adicionar filtros por gênero e avaliação.
+- [x] Melhorar a experiência de busca com debounce.
+- [x] Exibir elenco principal dos filmes.
 
 ### Melhorias planejadas
 
-- [ ] Adicionar filtro por avaliação dos filmes.
-- [ ] Melhorar a experiência de busca com debounce.
-- [ ] Aprimorar a combinação entre pesquisa por título e filtros por gênero.
-- [ ] Exibir elenco e informações adicionais dos filmes.
 - [ ] Criar uma lista de filmes para assistir posteriormente.
 - [ ] Aprimorar a responsividade das demais telas.
 - [ ] Adicionar estados visuais de carregamento (skeletons).
@@ -164,6 +168,8 @@ Durante o desenvolvimento, foram trabalhados:
 - Parâmetros com valores padrão em funções.
 - Template literals para construção dinâmica de URLs.
 - Eventos e controle de propagação com `event.stopPropagation()`.
+- Manipulação de arrays com `.slice()`.
+- Temporizadores com `setTimeout()` e `clearTimeout()`.
 
 ### APIs e programação assíncrona
 
@@ -180,6 +186,8 @@ Durante o desenvolvimento, foram trabalhados:
 - Funções de limpeza (_cleanup_) do `useEffect`.
 - Controle de respostas assíncronas desatualizadas.
 - Gerenciamento de estados de carregamento e erro.
+- Integração com múltiplos endpoints da API TMDB.
+- Otimização de pesquisas com debounce.
 
 ### Persistência e organização
 
@@ -197,6 +205,7 @@ Durante o desenvolvimento, foram trabalhados:
 - Transições com `transition`.
 - Classes CSS dinâmicas.
 - Estilização de formulários e seletores.
+- Controle de proporção de imagens com `aspect-ratio` e `object-fit`.
 
 ## 📁 Estrutura do projeto
 

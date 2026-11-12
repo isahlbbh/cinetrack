@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { getMovieDetails } from "../services/tmdb";
+import { getMovieDetails, getMovieCredits } from "../services/tmdb";
 import { useEffect, useState } from "react";
 import "../../styles/MovieDetailsPage.css";
 
@@ -7,6 +7,7 @@ function MovieDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+  const [cast, setCast] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -17,6 +18,8 @@ function MovieDetailsPage() {
       try {
         const data = await getMovieDetails(id);
         setMovie(data);
+        const castData = await getMovieCredits(id);
+        setCast(castData);
       } catch (error) {
         setError("Não foi possível carregar o filme.");
       }
@@ -62,6 +65,24 @@ function MovieDetailsPage() {
 
           <h2>Sinopse</h2>
           <p>{movie.overview || "Sinopse indisponível."}</p>
+          <h2>Elenco principal</h2>
+
+          <div className="movie-cast">
+            {cast.map((actor) => (
+              <div key={actor.id}>
+                <img
+                  src={
+                    actor.profile_path
+                      ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                      : "https://placehold.co/185x278/211b30/c4a4ff?text=Sem+foto"
+                  }
+                  alt={`Foto de ${actor.name}`}
+                />
+                <p>{actor.name}</p>
+                <p>{actor.character}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </main>
