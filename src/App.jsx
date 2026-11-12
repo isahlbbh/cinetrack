@@ -71,6 +71,7 @@ function App() {
             favorites={favorites}
             toggleFavorite={toggleFavorite}
             watched={watched}
+            toggleWatched={toggleWatched}
             watchList={watchList}
             toggleWatchList={toggleWatchList}
           />
@@ -84,6 +85,7 @@ function App() {
             watched={watched}
             toggleWatched={toggleWatched}
             favorites={favorites}
+            toggleFavorite={toggleFavorite}
             watchList={watchList}
             toggleWatchList={toggleWatchList}
           />

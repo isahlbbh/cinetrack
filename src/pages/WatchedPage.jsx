@@ -4,7 +4,14 @@ import { useState, useEffect } from "react";
 import { getMovieDetails } from "../services/tmdb";
 import { useNavigate } from "react-router-dom";
 
-export default function WatchedPage({ watched, toggleWatched, favorites }) {
+export default function WatchedPage({
+  watched,
+  toggleWatched,
+  favorites,
+  toggleFavorite,
+  watchList,
+  toggleWatchList,
+}) {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +66,10 @@ export default function WatchedPage({ watched, toggleWatched, favorites }) {
                 onClick={() => navigate(`/movie/${movie.id}`)}
                 isWatched={watched.includes(movie.id)}
                 onWatchedClick={toggleWatched}
+                watchList={watchList}
+                toggleWatchList={toggleWatchList}
+                isFavorite={favorites.includes(movie.id)}
+                onFavoriteClick={toggleFavorite}
               />
             ))}
           </div>

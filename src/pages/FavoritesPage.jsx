@@ -4,7 +4,14 @@ import MovieCard from "../components/MovieCard";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 
-export default function FavoritesPage({ favorites, toggleFavorite, watched }) {
+export default function FavoritesPage({
+  favorites,
+  toggleFavorite,
+  watched,
+  toggleWatched,
+  watchList,
+  toggleWatchList,
+}) {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,6 +63,10 @@ export default function FavoritesPage({ favorites, toggleFavorite, watched }) {
                 poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 isFavorite={true}
                 onFavoriteClick={toggleFavorite}
+                watchList={watchList}
+                toggleWatchList={toggleWatchList}
+                isWatched={watched.includes(movie.id)}
+                onWatchedClick={toggleWatched}
               />
             ))}
           </div>

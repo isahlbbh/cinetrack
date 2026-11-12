@@ -14,7 +14,7 @@ function MovieCard({
   watchList,
   toggleWatchList,
 }) {
-  const isInWatchList = watchList?.includes(id) ?? false;
+  const isInWatchList = watchList.includes(id);
   return (
     <article className="movie-card" onClick={onClick}>
       <img src={poster} alt={`Pôster de ${title}`} className="movie-poster" />
@@ -39,6 +39,7 @@ function MovieCard({
       </button>
       <button
         className="watchlist-btn"
+        aria-pressed={isInWatchList}
         onClick={(event) => {
           event.stopPropagation();
           toggleWatchList(id);
