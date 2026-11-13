@@ -2,6 +2,8 @@
 
 **Explore filmes, descubra novas histórias e organize seus favoritos e assistidos.**
 
+[Ver demonstração](https://cinetrack-blush.vercel.app/) · [Funcionalidades](#-funcionalidades-implementadas) · [Como executar](#️-como-executar-o-projeto)
+
 O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes populares, pesquisar títulos, filtrar filmes por gênero, visualizar informações detalhadas, criar uma lista personalizada de favoritos e acompanhar os filmes já assistidos, utilizando dados reais da API do The Movie Database (TMDB).
 
 O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento Front-end, como componentização, gerenciamento e compartilhamento de estados, consumo de APIs REST, navegação entre páginas, persistência de dados, filtros dinâmicos, programação assíncrona e construção de interfaces responsivas.
@@ -244,7 +246,7 @@ cinetrack/
 ### 1. Clone o repositório
 
 ```bash
-git clone URL_DO_SEU_REPOSITORIO
+git clone https://github.com/isahlbbh/cinetrack.git
 cd cinetrack
 ```
 
