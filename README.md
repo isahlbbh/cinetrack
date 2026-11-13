@@ -88,11 +88,20 @@ O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento
 - Indicador de carregamento durante as requisições.
 - Compartilhamento do estado de assistidos entre páginas.
 
+### 🍿 Lista "Quero assistir"
+
+- Adição e remoção de filmes da watchlist diretamente nos cards.
+- Página exclusiva para visualizar os filmes salvos.
+- Persistência da lista utilizando LocalStorage.
+- Exibição de pôsteres, títulos e avaliações.
+- Contador dinâmico de filmes na Sidebar.
+- Possibilidade de favoritar e marcar filmes como assistidos diretamente da watchlist.
+
 ### 🧭 Navegação e interface
 
-- Sidebar com navegação entre **Explorar**, **Minha lista** e **Assistidos**.
+- Sidebar com navegação entre **Explorar**, **Minha lista**, **Assistidos** e **Quero assistir**.
 - Destaque automático da página ativa utilizando `useLocation()`.
-- Contadores dinâmicos de filmes favoritos e assistidos.
+- Contadores dinâmicos de filmes favoritos, assistidos e da watchlist.
 - Atualização automática dos contadores ao adicionar ou remover filmes.
 - Interface em tema escuro com detalhes em roxo.
 - Seletor de gêneros estilizado com efeitos de hover, focus e transições.
@@ -124,10 +133,10 @@ O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 - [x] Adicionar filtros por gênero e avaliação.
 - [x] Melhorar a experiência de busca com debounce.
 - [x] Exibir elenco principal dos filmes.
+- [x] Criar uma lista de filmes para assistir posteriormente.
 
 ### Melhorias planejadas
 
-- [ ] Criar uma lista de filmes para assistir posteriormente.
 - [ ] Aprimorar a responsividade das demais telas.
 - [ ] Adicionar estados visuais de carregamento (skeletons).
 - [ ] Aprimorar o tratamento de erros nas páginas de favoritos e assistidos.
