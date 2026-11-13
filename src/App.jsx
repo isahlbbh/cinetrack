@@ -4,6 +4,7 @@ import WatchedPage from "./pages/WatchedPage";
 import HomePage from "./pages/HomePage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import WatchListPage from "./pages/WatchListPage";
 
 function App() {
   const [favorites, setFavorites] = useState(() => {
@@ -77,7 +78,6 @@ function App() {
           />
         }
       />
-
       <Route
         path="/watched"
         element={
@@ -91,6 +91,15 @@ function App() {
           />
         }
       />
+      <Route
+        path="/watchlist"
+        element={
+          <WatchListPage
+            watchList={watchList}
+            toggleWatchList={toggleWatchList}
+          />
+        }
+      />{" "}
     </Routes>
   );
 }
