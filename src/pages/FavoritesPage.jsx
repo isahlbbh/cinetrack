@@ -40,6 +40,7 @@ export default function FavoritesPage({
       <Sidebar
         favoritesCount={favorites.length}
         watchedCount={watched.length}
+        watchListCount={watchList.length}
       />
 
       <div className="main-content">

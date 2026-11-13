@@ -1,6 +1,6 @@
 import "../../styles/Sidebar.css";
 import { Link, useLocation } from "react-router-dom";
-function Sidebar({ favoritesCount, watchedCount }) {
+function Sidebar({ favoritesCount, watchedCount, watchListCount }) {
   const location = useLocation();
   return (
     <aside className="sidebar">
@@ -29,6 +29,14 @@ function Sidebar({ favoritesCount, watchedCount }) {
           className={`sidebar-link ${location.pathname === "/watched" ? "active" : ""}`}
         >
           ✓ <span>Assistidos ({watchedCount})</span>{" "}
+        </Link>
+        <Link
+          to="/watchlist"
+          className={`sidebar-link ${
+            location.pathname === "/watchlist" ? "active" : ""
+          }`}
+        >
+          🍿 <span>Quero assistir ({watchListCount})</span>
         </Link>
       </nav>
 

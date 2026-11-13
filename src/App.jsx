@@ -95,11 +95,15 @@ function App() {
         path="/watchlist"
         element={
           <WatchListPage
+            favorites={favorites}
+            toggleFavorite={toggleFavorite}
+            watched={watched}
+            toggleWatched={toggleWatched}
             watchList={watchList}
             toggleWatchList={toggleWatchList}
           />
         }
-      />{" "}
+      />
     </Routes>
   );
 }
