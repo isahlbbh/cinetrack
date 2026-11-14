@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import MovieCard from "../components/MovieCard";
 import { getMovieDetails } from "../services/tmdb";
+import "../../styles/App.css";
 
 export default function WatchListPage({
   watchList,

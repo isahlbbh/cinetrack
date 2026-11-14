@@ -72,3 +72,24 @@
 .sidebar-footer span {
   color: #8b5cf6;
 }
+
+@media(max-width: 768px) {
+  .sidebar{
+    width: 100%;
+    min-height: auto;
+    padding: 16px;
+    border-right: none;
+    border-bottom: 1px solid #292932;
+  }
+  .sidebar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sidebar-link {
+  padding: 8px;
+  font-size: 12px;
+  gap: 4px;
+}
+}
