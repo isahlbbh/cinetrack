@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
+import SkeletonCard from "../components/SkeletonCard";
 
-import {
-  getPopularMovies,
-  searchMovies,
-  getMoviesByGenre,
-} from "../services/tmdb";
+import { searchMovies, getMoviesByGenre } from "../services/tmdb";
 
 import "../../styles/App.css";
 
@@ -30,7 +26,9 @@ function HomePage({
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+
   const [searchParams, setSearchParams] = useSearchParams();
+
   const genre = searchParams.get("genre") || "all";
   const rating = searchParams.get("rating") || "all";
 
@@ -42,6 +40,7 @@ function HomePage({
     { id: 878, name: "Ficção científica" },
     { id: 18, name: "Drama" },
   ];
+
   const ratings = [
     { id: "all", name: "Todas as avaliações" },
     { id: 6, name: "⭐ 6.0 ou superior" },
@@ -52,6 +51,7 @@ function HomePage({
   function handleMovieClick(id) {
     navigate(`/movie/${id}`);
   }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
@@ -62,13 +62,13 @@ function HomePage({
 
   useEffect(() => {
     let ignore = false;
+
     async function loadMovies() {
       setLoading(true);
       setError("");
+
       if (page === 1) {
         setMovies([]);
-      }
-      if (page === 1) {
         setHasMore(true);
       }
 
@@ -85,11 +85,13 @@ function HomePage({
 
         if (debouncedSearch.trim()) {
           setMovies(data);
+          setHasMore(false);
         } else if (page === 1) {
           setMovies(data.results);
         } else {
           setMovies((prevMovies) => [...prevMovies, ...data.results]);
         }
+
         if (!debouncedSearch.trim()) {
           setHasMore(page < 5 && page < data.totalPages);
         }
@@ -111,6 +113,7 @@ function HomePage({
       ignore = true;
     };
   }, [page, debouncedSearch, genre, rating]);
+
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.title
       .toLowerCase()
@@ -123,6 +126,7 @@ function HomePage({
 
     return matchesSearch && matchesGenre;
   });
+
   return (
     <div className="app-layout">
       <Sidebar
@@ -142,6 +146,7 @@ function HomePage({
             value={genre}
             onChange={(event) => {
               setPage(1);
+
               setSearchParams((prev) => {
                 const params = new URLSearchParams(prev);
                 params.set("genre", event.target.value);
@@ -161,6 +166,7 @@ function HomePage({
             value={rating}
             onChange={(event) => {
               setPage(1);
+
               setSearchParams((prev) => {
                 const params = new URLSearchParams(prev);
                 params.set("rating", event.target.value);
@@ -175,8 +181,12 @@ function HomePage({
             ))}
           </select>
 
-          {loading && movies.length === 0 ? (
-            <p className="empty-message">Carregando filmes...</p>
+          {loading && page === 1 ? (
+            <div className="movies-grid">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <SkeletonCard key={index} />
+              ))}
+            </div>
           ) : error ? (
             <p className="empty-message">{error}</p>
           ) : filteredMovies.length === 0 ? (
@@ -185,10 +195,6 @@ function HomePage({
             <div className="movies-grid">
               {filteredMovies.map((movie) => (
                 <MovieCard
-                  isFavorite={favorites.includes(movie.id)}
-                  onFavoriteClick={toggleFavorite}
-                  isWatched={watched.includes(movie.id)}
-                  onWatchedClick={toggleWatched}
                   key={movie.id}
                   id={movie.id}
                   title={movie.title}
@@ -200,6 +206,10 @@ function HomePage({
                       : "https://placehold.co/300x450/211b30/c4a4ff?text=Sem+poster"
                   }
                   onClick={() => handleMovieClick(movie.id)}
+                  isFavorite={favorites.includes(movie.id)}
+                  onFavoriteClick={toggleFavorite}
+                  isWatched={watched.includes(movie.id)}
+                  onWatchedClick={toggleWatched}
                   watchList={watchList}
                   toggleWatchList={toggleWatchList}
                 />
