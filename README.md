@@ -135,11 +135,11 @@ O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 - [x] Exibir elenco principal dos filmes.
 - [x] Criar uma lista de filmes para assistir posteriormente.
 - [x] Adicionar Skeleton Loading animado na página de exploração de filmes.
+- [x] Implementar responsividade nas principais telas do CineTrack.
 
 ### Melhorias planejadas
 
 - [ ] Aprimorar a responsividade das demais telas.
-- [ ] Aprimorar o tratamento de erros nas páginas de favoritos e assistidos.
 - [ ] Aprimorar a acessibilidade da interface.
 
 ## 📚 Conceitos praticados
