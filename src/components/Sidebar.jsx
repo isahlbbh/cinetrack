@@ -11,27 +11,32 @@ function Sidebar({ favoritesCount, watchedCount, watchListCount }) {
 
       <p className="sidebar-label">MENU</p>
 
-      <nav className="sidebar-nav">
+      <nav className="sidebar-nav" aria-label="Menu principal">
+        {" "}
         <Link
           to="/"
+          aria-current={location.pathname === "/" ? "page" : undefined}
           className={`sidebar-link ${location.pathname === "/" ? "active" : ""}`}
         >
           ◈ <span>Explorar</span>
         </Link>
         <Link
           to="/favorites"
+          aria-current={location.pathname === "/favorites" ? "page" : undefined}
           className={`sidebar-link ${location.pathname === "/favorites" ? "active" : ""}`}
         >
           ♡ <span>Minha lista ({favoritesCount})</span>{" "}
         </Link>
         <Link
           to="/watched"
+          aria-current={location.pathname === "/watched" ? "page" : undefined}
           className={`sidebar-link ${location.pathname === "/watched" ? "active" : ""}`}
         >
           ✓ <span>Assistidos ({watchedCount})</span>{" "}
         </Link>
         <Link
           to="/watchlist"
+          aria-current={location.pathname === "/watchlist" ? "page" : undefined}
           className={`sidebar-link ${
             location.pathname === "/watchlist" ? "active" : ""
           }`}

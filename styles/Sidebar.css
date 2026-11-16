@@ -59,6 +59,10 @@
   background: #292536;
   color: #ffffff;
 }
+.sidebar-link:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 3px;
+}
 
 .sidebar-footer {
   margin-top: auto;

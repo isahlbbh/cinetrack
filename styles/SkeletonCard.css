@@ -39,3 +39,10 @@
 .skeleton-info {
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-poster,
+  .skeleton-title,
+  .skeleton-info {
+    animation: none;
+  }
+}

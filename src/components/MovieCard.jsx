@@ -16,11 +16,22 @@ function MovieCard({
 }) {
   const isInWatchList = watchList.includes(id);
   return (
-    <article className="movie-card" onClick={onClick}>
+    <article
+      className="movie-card"
+      onClick={onClick}
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.target === event.currentTarget && event.key === "Enter") {
+          onClick();
+        }
+      }}
+    >
+      {" "}
       <img src={poster} alt={`Pôster de ${title}`} className="movie-poster" />
-
       <button
         className="favorite-btn"
+        aria-label={`Adicionar ${title} aos favoritos`}
+        aria-pressed={isFavorite}
         onClick={(event) => {
           event.stopPropagation();
           onFavoriteClick(id);
@@ -30,6 +41,8 @@ function MovieCard({
       </button>
       <button
         className="watched-btn"
+        aria-label={`Marcar ${title} como assistido`}
+        aria-pressed={isWatched}
         onClick={(event) => {
           event.stopPropagation();
           onWatchedClick(id);
@@ -39,6 +52,7 @@ function MovieCard({
       </button>
       <button
         className="watchlist-btn"
+        aria-label={`Quero assistir ${title}`}
         aria-pressed={isInWatchList}
         onClick={(event) => {
           event.stopPropagation();
