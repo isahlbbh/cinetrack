@@ -15,10 +15,13 @@ export default function FavoritesPage({
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [retry, setRetry] = useState(0);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function loadFavorites() {
       setLoading(true);
+      setError("");
 
       try {
         const requests = favorites.map((id) => getMovieDetails(id));
@@ -28,13 +31,14 @@ export default function FavoritesPage({
         setMovies(results);
       } catch (error) {
         console.error("Erro ao carregar favoritos:", error);
+        setError("Não foi possível carregar seus favoritos.");
       } finally {
         setLoading(false);
       }
     }
 
     loadFavorites();
-  }, [favorites]);
+  }, [favorites, retry]);
   return (
     <div className="app-layout">
       <Sidebar
@@ -47,30 +51,45 @@ export default function FavoritesPage({
         <main className="page-content">
           <h1>Meus favoritos</h1>
           {loading && <p>Carregando favoritos...</p>}
-          {!loading && movies.length === 0 && (
+          {!loading && error && (
+            <p className="empty-message" role="alert">
+              {error}
+            </p>
+          )}
+          {!loading && error && (
+            <button
+              className="load-more-btn"
+              onClick={() => setRetry((prev) => prev + 1)}
+            >
+              Tentar novamente
+            </button>
+          )}
+          {!loading && !error && movies.length === 0 && (
             <p className="empty-message">
               Você ainda não tem filmes favoritos.
             </p>
           )}
-          <div className="movies-grid">
-            {movies.map((movie) => (
-              <MovieCard
-                onClick={() => navigate(`/movie/${movie.id}`)}
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                year={movie.release_date?.slice(0, 4) || "—"}
-                rating={movie.vote_average.toFixed(1)}
-                poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                isFavorite={true}
-                onFavoriteClick={toggleFavorite}
-                watchList={watchList}
-                toggleWatchList={toggleWatchList}
-                isWatched={watched.includes(movie.id)}
-                onWatchedClick={toggleWatched}
-              />
-            ))}
-          </div>
+          {!loading && !error && (
+            <div className="movies-grid">
+              {movies.map((movie) => (
+                <MovieCard
+                  onClick={() => navigate(`/movie/${movie.id}`)}
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title}
+                  year={movie.release_date?.slice(0, 4) || "—"}
+                  rating={movie.vote_average.toFixed(1)}
+                  poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  isFavorite={true}
+                  onFavoriteClick={toggleFavorite}
+                  watchList={watchList}
+                  toggleWatchList={toggleWatchList}
+                  isWatched={watched.includes(movie.id)}
+                  onWatchedClick={toggleWatched}
+                />
+              ))}
+            </div>
+          )}
         </main>
       </div>
     </div>
