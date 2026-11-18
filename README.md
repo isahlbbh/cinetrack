@@ -4,13 +4,29 @@
 
 [Ver demonstração](https://cinetrack-blush.vercel.app/) · [Funcionalidades](#-funcionalidades-implementadas) · [Como executar](#️-como-executar-o-projeto)
 
-O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes populares, pesquisar títulos, filtrar filmes por gênero, visualizar informações detalhadas, criar uma lista personalizada de favoritos e acompanhar os filmes já assistidos, utilizando dados reais da API do The Movie Database (TMDB).
+O **CineTrack** é uma aplicação web desenvolvida com React que permite explorar filmes, pesquisar títulos, aplicar filtros por gênero e avaliação, visualizar detalhes e elenco, além de organizar filmes em três listas personalizadas: **Favoritos, Assistidos e Quero assistir**.
+
+A aplicação consome dados reais da API do The Movie Database (TMDB), utiliza LocalStorage para persistência das listas e conta com interface responsiva, recursos de acessibilidade e navegação dinâmica com React Router.
 
 O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento Front-end, como componentização, gerenciamento e compartilhamento de estados, consumo de APIs REST, navegação entre páginas, persistência de dados, filtros dinâmicos, programação assíncrona e construção de interfaces responsivas.
 
 ## 📸 Preview do projeto
 
-![Demonstração do CineTrack](./src/screenshots/cinetrack.png)
+### 🎬 Página inicial
+
+![Página inicial do CineTrack](./src/screenshots/cinetrack.png)
+
+### ❤️ Favoritos
+
+![Página de favoritos](./src/screenshots/favorites.png)
+
+### 🎥 Detalhes do filme
+
+![Página de detalhes do filme](./src/screenshots/info.png)
+
+### ✅ Filmes assistidos
+
+![Página de filmes assistidos](./src/screenshots/watched.png)
 
 🌐 **[Acesse o projeto online](https://cinetrack-blush.vercel.app/)**
 
@@ -108,6 +124,17 @@ O projeto foi desenvolvido para colocar em prática conceitos de desenvolvimento
 - Layout responsivo na página de detalhes.
 - Organização em componentes, páginas e serviços.
 
+### ♿ Acessibilidade e experiência do usuário
+
+- Navegação entre páginas utilizando links semânticos.
+- Identificação da página ativa com `aria-current`.
+- Identificação de campos e controles com `aria-label`.
+- Indicadores de carregamento com `role="status"`.
+- Mensagens de erro com `role="alert"`.
+- Destaque visual para navegação por teclado com `:focus-visible`.
+- Respeito à preferência por movimento reduzido com `prefers-reduced-motion`.
+- Skeleton Loading durante o carregamento dos filmes.
+
 ## 🛠️ Próximas funcionalidades
 
 O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
@@ -136,11 +163,25 @@ O CineTrack continua em desenvolvimento. As próximas melhorias previstas são:
 - [x] Criar uma lista de filmes para assistir posteriormente.
 - [x] Adicionar Skeleton Loading animado na página de exploração de filmes.
 - [x] Implementar responsividade nas principais telas do CineTrack.
+- [x] Implementar navegação semântica nos cards utilizando `Link` do React Router.
+- [x] Melhorar a navegação por teclado com `:focus-visible`.
+- [x] Identificar a página ativa utilizando `aria-current`.
+- [x] Adicionar `aria-label` aos campos e controles de navegação.
+- [x] Implementar mensagens acessíveis de carregamento com `role="status"`.
+- [x] Implementar mensagens de erro acessíveis com `role="alert"`.
+- [x] Adicionar suporte à preferência por movimento reduzido com `prefers-reduced-motion`.
+- [x] Melhorar o tratamento de carregamento e erros na página Quero assistir.
+- [x] Configurar o deploy na Vercel.
+- [x] Corrigir o erro 404 ao atualizar páginas internas utilizando `vercel.json`.
+- [x] Executar análise estática com Oxlint, finalizando com 0 erros e 0 avisos.
 
-### Melhorias planejadas
+#### 🔮 Possíveis melhorias futuras
 
-- [ ] Aprimorar a responsividade das demais telas.
-- [ ] Aprimorar a acessibilidade da interface.
+- [ ] Adicionar ordenação dos filmes por popularidade e data de lançamento.
+- [ ] Implementar avaliações pessoais dos filmes.
+- [ ] Adicionar testes automatizados.
+- [ ] Continuar aprimorando a responsividade e a acessibilidade.
+- [ ] Explorar novas funcionalidades e melhorias de experiência do usuário.
 
 ## 📚 Conceitos praticados
 
@@ -247,6 +288,7 @@ cinetrack/
 │   └── index.css
 ├── .env.local
 ├── package.json
+├── vercel.json
 └── README.md
 ```
 
@@ -284,6 +326,14 @@ npm run dev
 Abra no navegador o endereço local informado pelo Vite.
 
 **Observação:** variáveis com o prefixo `VITE_` são incorporadas ao código do navegador e não devem ser consideradas secretas. Credenciais privadas devem ser protegidas em um backend.
+
+## 🌐 Deploy
+
+O CineTrack está publicado na **Vercel**, com integração ao repositório do GitHub.
+
+🔗 **[Acessar CineTrack](https://cinetrack-blush.vercel.app/)**
+
+O projeto utiliza um arquivo `vercel.json` para configurar o redirecionamento das rotas ao `index.html`, permitindo atualizar ou acessar diretamente páginas internas da aplicação sem receber o erro 404.
 
 ## 🎯 Objetivo do projeto
 
