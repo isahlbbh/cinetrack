@@ -20,7 +20,7 @@ function MovieDetailsPage() {
         setMovie(data);
         const castData = await getMovieCredits(id);
         setCast(castData);
-      } catch (error) {
+      } catch {
         setError("Não foi possível carregar o filme.");
       }
     }

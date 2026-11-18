@@ -1,4 +1,5 @@
 import "../../styles/MovieCard.css";
+import { Link } from "react-router-dom";
 
 function MovieCard({
   id,
@@ -6,7 +7,6 @@ function MovieCard({
   year,
   rating,
   poster,
-  onClick,
   isFavorite,
   onFavoriteClick,
   isWatched,
@@ -16,16 +16,7 @@ function MovieCard({
 }) {
   const isInWatchList = watchList.includes(id);
   return (
-    <article
-      className="movie-card"
-      onClick={onClick}
-      tabIndex={0}
-      onKeyDown={(event) => {
-        if (event.target === event.currentTarget && event.key === "Enter") {
-          onClick();
-        }
-      }}
-    >
+    <article className="movie-card">
       {" "}
       <img src={poster} alt={`Pôster de ${title}`} className="movie-poster" />
       <button
@@ -62,8 +53,11 @@ function MovieCard({
         {isInWatchList ? "🍿 Na lista" : "➕ Quero assistir"}
       </button>
       <div className="movie-info">
-        <h3>{title}</h3>
-
+        <h3>
+          <Link to={`/movie/${id}`} className="movie-title-link">
+            {title}
+          </Link>
+        </h3>
         <div className="movie-details">
           <span>{year}</span>
           <span className="movie-rating">★ {rating}</span>

@@ -6,6 +6,7 @@
   overflow: hidden;
   transition: transform 0.2s, border-color 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
 .movie-card:hover {
@@ -42,9 +43,6 @@
 .movie-rating {
   color: #c4a4ff;
   font-weight: 600;
-}
-.movie-card {
-  position: relative;
 }
 
 .favorite-btn {
@@ -97,4 +95,19 @@
 .watchlist-btn:hover {
   background-color: #8b5cf6;
   color: white;
+}
+.movie-card:has(.movie-title-link:focus-visible) {
+  outline: 2px solid #a78bfa;
+  outline-offset: 4px;
+}
+
+.movie-title-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.watched-btn,
+.watchlist-btn {
+  position: relative;
+  z-index: 2;
 }

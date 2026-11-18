@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
@@ -17,8 +17,6 @@ function HomePage({
   watchList,
   toggleWatchList,
 }) {
-  const navigate = useNavigate();
-
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [movies, setMovies] = useState([]);
@@ -47,10 +45,6 @@ function HomePage({
     { id: 7, name: "⭐ 7.0 ou superior" },
     { id: 8, name: "⭐ 8.0 ou superior" },
   ];
-
-  function handleMovieClick(id) {
-    navigate(`/movie/${id}`);
-  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -140,9 +134,12 @@ function HomePage({
 
         <main className="page-content">
           <h1>Explorar filmes</h1>
-
+          <div role="status" className="sr-only">
+            {loading ? "Carregando filmes..." : ""}
+          </div>
           <select
             className="genre-select"
+            aria-label="Filtrar filmes por gênero"
             value={genre}
             onChange={(event) => {
               setPage(1);
@@ -163,6 +160,7 @@ function HomePage({
 
           <select
             className="genre-select"
+            aria-label="Filtrar filmes por avaliação"
             value={rating}
             onChange={(event) => {
               setPage(1);
@@ -182,13 +180,19 @@ function HomePage({
           </select>
 
           {loading && page === 1 ? (
-            <div className="movies-grid">
+            <div
+              className="movies-grid"
+              aria-busy="true"
+              aria-label="Carregando filmes"
+            >
               {Array.from({ length: 8 }).map((_, index) => (
                 <SkeletonCard key={index} />
               ))}
             </div>
           ) : error ? (
-            <p className="empty-message">{error}</p>
+            <p className="empty-message" role="alert">
+              {error}
+            </p>
           ) : filteredMovies.length === 0 ? (
             <p className="empty-message">Nenhum filme encontrado. 🎬</p>
           ) : (
@@ -205,7 +209,6 @@ function HomePage({
                       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                       : "https://placehold.co/300x450/211b30/c4a4ff?text=Sem+poster"
                   }
-                  onClick={() => handleMovieClick(movie.id)}
                   isFavorite={favorites.includes(movie.id)}
                   onFavoriteClick={toggleFavorite}
                   isWatched={watched.includes(movie.id)}
