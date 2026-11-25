@@ -7,6 +7,8 @@ import SkeletonCard from "../components/SkeletonCard";
 
 import { searchMovies, getMoviesByGenre } from "../services/tmdb";
 
+import { runMovieRequest } from "../services/movieRequest.js";
+
 import "../../styles/App.css";
 
 function HomePage({
@@ -55,57 +57,38 @@ function HomePage({
   }, [search]);
 
   useEffect(() => {
-    let ignore = false;
+    setLoading(true);
+    setError("");
 
-    async function loadMovies() {
-      setLoading(true);
-      setError("");
-
-      if (page === 1) {
-        setMovies([]);
-        setHasMore(true);
-      }
-
-      try {
-        const data = debouncedSearch.trim()
-          ? await searchMovies(debouncedSearch)
-          : await getMoviesByGenre(
-              genre === "all" ? "" : Number(genre),
-              page,
-              rating,
-            );
-
-        if (ignore) return;
-
-        if (debouncedSearch.trim()) {
-          setMovies(data);
-          setHasMore(false);
-        } else if (page === 1) {
-          setMovies(data.results);
-        } else {
-          setMovies((prevMovies) => [...prevMovies, ...data.results]);
-        }
-
-        if (!debouncedSearch.trim()) {
-          setHasMore(page < 5 && page < data.totalPages);
-        }
-      } catch (error) {
-        if (!ignore) {
-          console.error("Erro ao carregar filmes:", error);
-          setError("Não foi possível carregar os filmes.");
-        }
-      } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
-      }
+    if (page === 1) {
+      setMovies([]);
+      setHasMore(true);
     }
 
-    loadMovies();
-
-    return () => {
-      ignore = true;
-    };
+    const isSearch = Boolean(debouncedSearch.trim());
+    return runMovieRequest(
+      () => isSearch
+        ? searchMovies(debouncedSearch)
+        : getMoviesByGenre(genre === "all" ? "" : Number(genre), page, rating),
+      {
+        onSuccess(data) {
+          if (isSearch) {
+            setMovies(data);
+            setHasMore(false);
+            return;
+          }
+          setMovies((previous) => page === 1 ? data.results : [...previous, ...data.results]);
+          setHasMore(page < 5 && page < data.totalPages);
+        },
+        onError(error) {
+          console.error("Erro ao carregar filmes:", error);
+          setError("Não foi possível carregar os filmes.");
+        },
+        onFinish() {
+          setLoading(false);
+        },
+      },
+    );
   }, [page, debouncedSearch, genre, rating]);
 
   const filteredMovies = movies.filter((movie) => {

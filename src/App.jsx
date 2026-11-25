@@ -5,11 +5,11 @@ import HomePage from "./pages/HomePage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import WatchListPage from "./pages/WatchListPage";
+import { readFavorites, saveFavorites, toggleFavoriteId } from "./services/favorites.ts";
 
 function App() {
   const [favorites, setFavorites] = useState(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
+    return readFavorites(localStorage);
   });
   const [watched, setWatched] = useState(() => {
     const savedWatched = localStorage.getItem("watched");
@@ -20,7 +20,7 @@ function App() {
     return savedWatchList ? JSON.parse(savedWatchList) : [];
   });
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    saveFavorites(localStorage, favorites);
   }, [favorites]);
   useEffect(() => {
     localStorage.setItem("watched", JSON.stringify(watched));
@@ -29,11 +29,7 @@ function App() {
     localStorage.setItem("watchList", JSON.stringify(watchList));
   }, [watchList]);
   function toggleFavorite(id) {
-    if (favorites.includes(id)) {
-      setFavorites(favorites.filter((favoriteId) => favoriteId !== id));
-    } else {
-      setFavorites([...favorites, id]);
-    }
+    setFavorites((current) => toggleFavoriteId(current, id));
   }
   function toggleWatched(id) {
     if (watched.includes(id)) {
